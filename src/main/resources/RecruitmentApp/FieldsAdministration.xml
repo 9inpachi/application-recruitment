@@ -20,147 +20,73 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity output="off"}}
-###check if a new office or status must be added
+#macro(handleNewEntry $request $className $name)
+  #set($pageName = $request)
+  #set($pageNoSpace = $pageName.replace(' ', ''))
+  #set($newDoc = $xwiki.getDocument("RecruitmentApp.${pageNoSpace}"))
+  #set($discard = $newDoc.createNewObject("RecruitmentApp.${className}"))
+  #set($fieldObject = $newDoc.getObject("RecruitmentApp.${className}"))
+  $newDoc.setTitle($pageName)
+  $fieldObject.set($name, $pageName)
+  $newDoc.save()
+#end
+###check if a new entry must be added
 #if ( "$!request.officeName" != "" )
-    #set($pageName = $request.officeName)
-    #set($pageNoSpace = $pageName.replace(' ', ''))
-    #set($newDoc = $xwiki.getDocument("RecruitmentApp.$pageNoSpace"))
-    #set($discard = $newDoc.createNewObject('RecruitmentApp.OfficeClass'))
-    #set($officeObject = $newDoc.getObject('RecruitmentApp.OfficeClass'))
-    $newDoc.setTitle($pageName)
-    $officeObject.set('office', $pageName)
-    $newDoc.save()
+  #handleNewEntry($request.officeName 'OfficeClass' 'office')
 #end
 #if ( "$!request.statusName" != "" )
-  #set($statusName = $request.statusName)
-  #set($statusNoSpace = $statusName.replace(' ', ''))
-  #set($newDoc = $xwiki.getDocument("RecruitmentApp.$statusNoSpace"))
-  #set($discard = $newDoc.createNewObject('RecruitmentApp.StatusClass'))
-  #set($statusObject = $newDoc.getObject('RecruitmentApp.StatusClass'))
-  $newDoc.setTitle($statusName)
-  $statusObject.set('status', $statusName)
-  $newDoc.save()
+  #handleNewEntry($request.statusName 'StatusClass' 'status')
 #end
 #if ( "$!request.sourceName" != "" )
-  #set($sourceName = $request.sourceName)
-  #set($sourceNoSpace = $sourceName.replace(' ', ''))
-  #set($newDoc = $xwiki.getDocument("RecruitmentApp.$sourceNoSpace"))
-  #set($discard = $newDoc.createNewObject('RecruitmentApp.SourceClass'))
-  #set($sourceOject = $newDoc.getObject('RecruitmentApp.SourceClass'))
-  $newDoc.setTitle($sourceName)
-  $sourceOject.set('source', $sourceName)
-  $newDoc.save()
+  #handleNewEntry($request.sourceName 'SourceClass' 'source')
 #end
 #if ( "$!request.stepName" != "" )
-  #set($stepName = $request.stepName)
-  #set($stepNoSpace = $stepName.replace(' ', ''))
-  #set($newDoc = $xwiki.getDocument("RecruitmentApp.$stepNoSpace"))
-  #set($discard = $newDoc.createNewObject('RecruitmentApp.NextStepClass'))
-  #set($stepObject = $newDoc.getObject('RecruitmentApp.NextStepClass'))
-  $newDoc.setTitle($stepName)
-  $stepObject.set('step', $stepName)
-  $newDoc.save()
+  #handleNewEntry($request.stepName 'NextStepClass' 'step')
 #end
 {{/velocity}}
 == Offices ==
 {{velocity}}
-#set($officeTableOptions = {
-  'className' : 'RecruitmentApp.OfficeClass',
-  'translationPrefix': 'recruitmentapp.office.livetable.',
-  'rowCount' : 10
-})
-#set($officeTableColumnsProperties = {
-   'office': { "type" : "String" },
-   '_actions' : { "actions" : ["delete"] }
-})
-#set($officeTableColumns = ["office", "_actions"])
-{{html clean="false"}}
-&lt;form method="post" class="xformInline" action=""&gt;
-  &lt;div&gt;
-    &lt;label for="officeName"&gt;Office&lt;/label&gt;
-    &lt;input type="text" id="officeName" name="officeName" /&gt;
-    &lt;span class="buttonwrapper"&gt;
-      &lt;input type="submit" value="Add" class="button" /&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/form&gt;
-{{/html}}
-#livetable("officeTable" $officeTableColumns $officeTableColumnsProperties $officeTableOptions)
+#macro(displayFieldForm $name $label)
+  {{html clean="false"}}
+  &lt;form method="post" class="xformInline" action=""&gt;
+    &lt;label for="$name"&gt;$label&lt;/label&gt;
+    &lt;input type="text" id="$name" name="$name" /&gt;
+    &lt;input type="submit" value="$services.localization.render('eventAdd')" class="btn btn-primary" /&gt;
+  &lt;/form&gt;
+  {{/html}}
+#end
+#macro(displayFieldLivetable $tableName $className $columnName)
+  #set($tableOptions = {
+    'className' : $className,
+    'translationPrefix': "recruitmentapp.${columnName}.livetable.",
+    'rowCount' : 10
+  })
+  #set($tableColumnsProperties = {
+     $columnName: { "type" : "String" },
+     '_actions' : { "actions" : ["delete"] }
+  })
+  #set($tableColumns = [$columnName, "_actions"])
+  #livetable($tableName $tableColumns $tableColumnsProperties $tableOptions)
+#end
+
+###Display offices
+#displayFieldForm('officeName' 'Office')
+#displayFieldLivetable("officeTable" 'RecruitmentApp.OfficeClass' 'office')
 
 ###Display status
 == Candidate Status ==
-#set($statusTableOptions = {
-  'className' : 'RecruitmentApp.StatusClass',
-  'translationPrefix' : 'recruitmentapp.status.livetable.',
-  'rowCount': 10
-})
-#set($statusTableColumnsProperties = {
-  'status' : { "type" : "String" },
-  '_actions' : { 'actions': ['delete']}
-})
-#set($statusTableColumns = ['status', '_actions'])
-{{html clean="false"}}
-&lt;form method="post" class="xformInline" action=""&gt;
-  &lt;div&gt;
-    &lt;label for="statusName"&gt;Status&lt;/label&gt;
-    &lt;input type="text" id="statusName" name="statusName" /&gt;
-    &lt;span class="buttonwrapper"&gt;
-      &lt;input type="submit" value="Add" class="button" /&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/form&gt;
-{{/html}}
-#livetable('statusTable' $statusTableColumns $statusTableColumnsProperties $statusTableOptions)
+#displayFieldForm('statusName' 'Status')
+#displayFieldLivetable("statusTable" 'RecruitmentApp.StatusClass' 'status')
 
 ###Display source
 == Source ==
-#set($sourceTableOptions = {
-   'className': 'RecruitmentApp.SourceClass',
-   'translationPrefix': 'recruitmentapp.source.livetable.',
-   'rowCount' : 10
-})
-#set($sourceTableColumnsProperties = {
-   'source': { "type": "String" },
-   '_actions': { 'actions' : ['delete'] }
-})
-#set($sourceTableColumns = ['source', '_actions'])
-{{html clean="false"}}
-&lt;form method="post" class="xformInline" action=""&gt;
-  &lt;div&gt;
-    &lt;label for="sourceName"&gt;Source&lt;/label&gt;
-    &lt;input type="text" id="sourceName" name="sourceName" /&gt;
-    &lt;span class="buttonwrapper"&gt;
-      &lt;input type="submit" value="Add" class="button" /&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/form&gt;
-{{/html}}
-#livetable('sourceTable' $sourceTableColumns $sourceTableColumnsProperties $sourceTableOptions)
+#displayFieldForm('sourceName' 'Source')
+#displayFieldLivetable("sourceTable" 'RecruitmentApp.SourceClass' 'source')
 
 ###Display next steps
 == Next Steps ==
-#set($stepTableOptions = {
-    'className': 'RecruitmentApp.NextStepClass',
-    'translationPrefix' : 'recruitmentapp.nextstep.livetable.',
-    'rowCount' : 10
-})
-#set($stepTableColumnsProperties = {
-    'step' : { "type" : "String" },
-    '_actions': { 'actions': ['delete'] }
-})
-#set($stepTableColumns = ['step', '_actions'])
-{{html clean="false"}}
-&lt;form method="post" class="xformInline" action=""&gt;
-  &lt;div&gt;
-    &lt;label for="stepName"&gt;Step&lt;/label&gt;
-    &lt;input type="text" id="stepName" name="stepName" /&gt;
-    &lt;span class="buttonwrapper"&gt;
-      &lt;input type="submit" value="Add" class="button" /&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/form&gt;
-{{/html}}
-#livetable('stepTable' $stepTableColumns $stepTableColumnsProperties $stepTableOptions)
+#displayFieldForm('stepName' 'Step')
+#displayFieldLivetable("stepTable" 'RecruitmentApp.NextStepClass' 'step')
 {{/velocity}}</content>
   <object>
     <name>RecruitmentApp.FieldsAdministration</name>
