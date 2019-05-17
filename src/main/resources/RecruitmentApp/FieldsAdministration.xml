@@ -31,7 +31,7 @@
     $officeObject.set('office', $pageName)
     $newDoc.save()
 #end
-#if ( "$!request.statusName" != "" ) 
+#if ( "$!request.statusName" != "" )
   #set($statusName = $request.statusName)
   #set($statusNoSpace = $statusName.replace(' ', ''))
   #set($newDoc = $xwiki.getDocument("RecruitmentApp.$statusNoSpace"))
@@ -41,7 +41,7 @@
   $statusObject.set('status', $statusName)
   $newDoc.save()
 #end
-#if ( "$!request.sourceName" != "" ) 
+#if ( "$!request.sourceName" != "" )
   #set($sourceName = $request.sourceName)
   #set($sourceNoSpace = $sourceName.replace(' ', ''))
   #set($newDoc = $xwiki.getDocument("RecruitmentApp.$sourceNoSpace"))
@@ -51,7 +51,7 @@
   $sourceOject.set('source', $sourceName)
   $newDoc.save()
 #end
-#if ( "$!request.stepName" != "" ) 
+#if ( "$!request.stepName" != "" )
   #set($stepName = $request.stepName)
   #set($stepNoSpace = $stepName.replace(' ', ''))
   #set($newDoc = $xwiki.getDocument("RecruitmentApp.$stepNoSpace"))
@@ -75,9 +75,14 @@
 })
 #set($officeTableColumns = ["office", "_actions"])
 {{html clean="false"}}
-&lt;form method="post" action=""&gt;
-   Office: &lt;input type="text" name="officeName" /&gt;
-   &lt;input type="submit" value="Add" class="button" /&gt;
+&lt;form method="post" class="xformInline" action=""&gt;
+  &lt;div&gt;
+    &lt;label for="officeName"&gt;Office&lt;/label&gt;
+    &lt;input type="text" id="officeName" name="officeName" /&gt;
+    &lt;span class="buttonwrapper"&gt;
+      &lt;input type="submit" value="Add" class="button" /&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
 #livetable("officeTable" $officeTableColumns $officeTableColumnsProperties $officeTableOptions)
@@ -95,9 +100,14 @@
 })
 #set($statusTableColumns = ['status', '_actions'])
 {{html clean="false"}}
-&lt;form method="post" action=""&gt;
-   Status: &lt;input type="text" name="statusName" /&gt;
-   &lt;input type="submit" value="Add" class="button" /&gt;
+&lt;form method="post" class="xformInline" action=""&gt;
+  &lt;div&gt;
+    &lt;label for="statusName"&gt;Status&lt;/label&gt;
+    &lt;input type="text" id="statusName" name="statusName" /&gt;
+    &lt;span class="buttonwrapper"&gt;
+      &lt;input type="submit" value="Add" class="button" /&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
 #livetable('statusTable' $statusTableColumns $statusTableColumnsProperties $statusTableOptions)
@@ -115,9 +125,14 @@
 })
 #set($sourceTableColumns = ['source', '_actions'])
 {{html clean="false"}}
-&lt;form method="post" action=""&gt;
-   Source: &lt;input type="text" name="sourceName" /&gt;
-   &lt;input type="submit" value="Add" class="button" /&gt;
+&lt;form method="post" class="xformInline" action=""&gt;
+  &lt;div&gt;
+    &lt;label for="sourceName"&gt;Source&lt;/label&gt;
+    &lt;input type="text" id="sourceName" name="sourceName" /&gt;
+    &lt;span class="buttonwrapper"&gt;
+      &lt;input type="submit" value="Add" class="button" /&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
 #livetable('sourceTable' $sourceTableColumns $sourceTableColumnsProperties $sourceTableOptions)
@@ -135,9 +150,14 @@
 })
 #set($stepTableColumns = ['step', '_actions'])
 {{html clean="false"}}
-&lt;form method="post" action=""&gt;
-   Step: &lt;input type="text" name="stepName"/&gt;
-   &lt;input type="submit" value="Add" class="button" /&gt;
+&lt;form method="post" class="xformInline" action=""&gt;
+  &lt;div&gt;
+    &lt;label for="stepName"&gt;Step&lt;/label&gt;
+    &lt;input type="text" id="stepName" name="stepName" /&gt;
+    &lt;span class="buttonwrapper"&gt;
+      &lt;input type="submit" value="Add" class="button" /&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
 #livetable('stepTable' $stepTableColumns $stepTableColumnsProperties $stepTableOptions)
