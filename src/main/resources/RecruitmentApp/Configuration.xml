@@ -34,17 +34,15 @@
   &lt;form method="post" class="xform" action=""&gt;
     &lt;dl&gt;
       &lt;dt&gt;
-        &lt;label for="userSpace"&gt;Users page&lt;/label&gt;
-        &lt;span class="xHint"&gt;Page from where to get assignee users&lt;/span&gt;
+        &lt;label for="userSpace"&gt;$services.localization.render('recruitmentapp.config.usersLabel')&lt;/label&gt;
+        &lt;span class="xHint"&gt;$services.localization.render('recruitmentapp.config.usersHint')&lt;/span&gt;
       &lt;/dt&gt;
       &lt;dd&gt;
         &lt;input type="text" id="userSpace" name="userSpace" value="$userConfigObj.wiki" /&gt;
       &lt;/dd&gt;
     &lt;/dl&gt;
     &lt;p&gt;
-      &lt;span class="buttonwrapper"&gt;
-        &lt;input type="submit" value="Update" class="button" /&gt;
-      &lt;/span&gt;
+      &lt;input type="submit" value="$services.localization.render('save')" class="btn btn-primary" /&gt;
     &lt;/p&gt;
   &lt;/form&gt;
 {{/html}}
@@ -56,17 +54,15 @@
     &lt;input type="hidden" name="query" value="$request.getQueryString()" /&gt;
     &lt;dl&gt;
       &lt;dt&gt;
-        &lt;label for="importSpace"&gt;Application page&lt;/label&gt;
-        &lt;span class="xHint"&gt;Page where the old recruitment application is installed&lt;/span&gt;
+        &lt;label for="importSpace"&gt;$services.localization.render('recruitmentapp.config.importLabel')&lt;/label&gt;
+        &lt;span class="xHint"&gt;$services.localization.render('recruitmentapp.config.importHint')&lt;/span&gt;
       &lt;/dt&gt;
       &lt;dd&gt;
         &lt;input type="text" id="importSpace" name="importSpace" value="$importConfigObj.space"&gt;
       &lt;/dd&gt;
     &lt;/dl&gt;
     &lt;p&gt;
-      &lt;span class="buttonwrapper"&gt;
-        &lt;input type="submit" value="Import" class="button"/&gt;
-      &lt;/span&gt;
+      &lt;input type="submit" value="$services.localization.render('import')" class="btn btn-primary" /&gt;
     &lt;/p&gt;
   &lt;/form&gt;
 {{/html}}
