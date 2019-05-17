@@ -31,22 +31,44 @@
 #end
 == Users ==
 {{html}}
-    Specify the space from where to get assignee users: 
-    &lt;form method="post" action=""&gt;
-        &lt;input type="text" name="userSpace" value="$userConfigObj.wiki" /&gt;
+  &lt;form method="post" class="xform" action=""&gt;
+    &lt;dl&gt;
+      &lt;dt&gt;
+        &lt;label for="userSpace"&gt;Users page&lt;/label&gt;
+        &lt;span class="xHint"&gt;Page from where to get assignee users&lt;/span&gt;
+      &lt;/dt&gt;
+      &lt;dd&gt;
+        &lt;input type="text" id="userSpace" name="userSpace" value="$userConfigObj.wiki" /&gt;
+      &lt;/dd&gt;
+    &lt;/dl&gt;
+    &lt;p&gt;
+      &lt;span class="buttonwrapper"&gt;
         &lt;input type="submit" value="Update" class="button" /&gt;
-    &lt;/form&gt;
+      &lt;/span&gt;
+    &lt;/p&gt;
+  &lt;/form&gt;
 {{/html}}
 ###import
 == Import ==
-Specify the space where the old recruitment application is installed.
-{{html clean="false"}}
-&lt;form method="post" action="$xwiki.getURL("RecruitmentApp.MigrationScript")"&gt;
-   &lt;input type="hidden" name="doc" value="$doc" /&gt;
-   &lt;input type="hidden" name="query" value="$request.getQueryString()" /&gt;
-   Space: &lt;input type="text" name="importSpace" value="$importConfigObj.space"&gt;
-   &lt;input type="submit" value="Import" class="button"/&gt;
-&lt;/form&gt;
+{{html}}
+  &lt;form method="post" class="xform" action="$xwiki.getURL("RecruitmentApp.MigrationScript")"&gt;
+    &lt;input type="hidden" name="doc" value="$doc" /&gt;
+    &lt;input type="hidden" name="query" value="$request.getQueryString()" /&gt;
+    &lt;dl&gt;
+      &lt;dt&gt;
+        &lt;label for="importSpace"&gt;Application page&lt;/label&gt;
+        &lt;span class="xHint"&gt;Page where the old recruitment application is installed&lt;/span&gt;
+      &lt;/dt&gt;
+      &lt;dd&gt;
+        &lt;input type="text" id="importSpace" name="importSpace" value="$importConfigObj.space"&gt;
+      &lt;/dd&gt;
+    &lt;/dl&gt;
+    &lt;p&gt;
+      &lt;span class="buttonwrapper"&gt;
+        &lt;input type="submit" value="Import" class="button"/&gt;
+      &lt;/span&gt;
+    &lt;/p&gt;
+  &lt;/form&gt;
 {{/html}}
 {{/velocity}}</content>
   <object>
