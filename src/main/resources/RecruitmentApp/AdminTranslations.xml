@@ -28,11 +28,16 @@ recruitmentapp.status.livetable._actions=Actions
 recruitmentapp.source.livetable.source=Source
 recruitmentapp.source.livetable._actions=Actions
 
-recruitmentapp.nextstep.livetable.step=Next Step
-recruitmentapp.nextstep.livetable._actions=Actions
+recruitmentapp.step.livetable.step=Next Step
+recruitmentapp.step.livetable._actions=Actions
 
 admin.recruitment=Recruitment
-admin.recruitment.description=Allows tracking of candidates and job offers</content>
+admin.recruitment.description=Allows tracking of candidates and job offers
+
+recruitmentapp.config.usersLabel=Users page
+recruitmentapp.config.usersHint=Page from where to get assignee users
+recruitmentapp.config.importLabel=Application page
+recruitmentapp.config.importHint=Page where the old recruitment application is installed</content>
   <object>
     <name>RecruitmentApp.AdminTranslations</name>
     <number>0</number>
